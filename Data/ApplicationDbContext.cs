@@ -3,9 +3,9 @@ using pacient_manager.Models;
 
 namespace pacient_manager.Data;
 
-public class AplicationDbContext : DbContext
+public class ApplicationDbContext : DbContext
 {
-    public AplicationDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+    public ApplicationDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
     {
         
     }
