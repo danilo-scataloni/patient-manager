@@ -5,7 +5,7 @@ using pacient_manager.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<RegisterPacientService>();
+builder.Services.AddScoped<PacientService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
