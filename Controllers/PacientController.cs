@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using pacient_manager.DTOs;
 using pacient_manager.Models;
 using pacient_manager.Services;
 
@@ -17,17 +19,35 @@ public class PacientController : ControllerBase
 
     [HttpGet]
     [Route("/api/pacients")]
-    public async Task<ActionResult<List<Pacient>>> GetAllPacients()
+    public async Task<IEnumerable<Pacient>> GetAllPacients()
     {
-        _pacientService.GetAllPacients();
         return await _pacientService.GetAllPacients();
     }
-    
+
+    [HttpGet]
+    [Route("/api/pacients/{id}")]
+    public async Task<Pacient> GetPacient(int id)
+    {
+        return await _pacientService.GetPacient(id);
+    }
+        
+        
     [HttpPost]
     [Route("/api/pacient")]
-    public async Task<IActionResult> RegisterUser(Pacient pacient)
+    public async Task<IActionResult> RegisterPacient(Pacient pacient)
     {
         await _pacientService.RegisterPacient(pacient);
         return Ok("Usuário cadastrado com sucesso!");
     }
+
+    [HttpPut]
+    [Route("/api/pacient/{pacientId}")]
+    public async Task<IActionResult> UpdatePacient(int pacientId, PacientDto pacient)
+    {
+       var existingPacient = await _pacientService.GetPacient(pacientId);
+       
+       await _pacientService.UpdatePacient(pacientId, pacient);
+       return Ok();
+    }
+    
 }
