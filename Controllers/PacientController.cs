@@ -24,7 +24,7 @@ public class PacientController : ControllerBase
     }
     
     [HttpPost]
-    [Route("/api/register-user")]
+    [Route("/api/pacient")]
     public async Task<IActionResult> RegisterUser(Pacient pacient)
     {
         await _pacientService.RegisterPacient(pacient);
