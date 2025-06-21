@@ -16,7 +16,7 @@ public class PacientController : ControllerBase
     }
 
     [HttpGet]
-    [Route("/pacients")]
+    [Route("/api/pacients")]
     public async Task<ActionResult<List<Pacient>>> GetAllPacients()
     {
         _pacientService.GetAllPacients();
