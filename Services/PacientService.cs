@@ -30,26 +30,25 @@ public class PacientService
         return _mapper.Map<PacientDto>(pacient);
     }
     
-    public async Task RegisterPacient(Pacient pacient)
+    public async Task RegisterPacient(PacientDto pacient)
     {
-        await _context.Pacients.AddAsync(pacient);
+        await _context.Pacients.AddAsync(_mapper.Map<Pacient>(pacient));
         await _context.SaveChangesAsync();
-
     }
 
-    public async Task UpdatePacient(int pacientId, PacientDto pacient)
+    public async Task UpdatePacient(int pacientId, PacientDto pacientDto)
     {
         var existingPacient = await _context.Pacients.FindAsync(pacientId);
         if (existingPacient == null) throw new Exception("Pacient não encontrado!");
 
-        if (pacient.FirstName != null)
-            existingPacient.FirstName = pacient.FirstName;
-        if (pacient.LastName != null)
-            existingPacient.LastName = pacient.LastName;
-        if (pacient.Document != null)
-            existingPacient.Document = pacient.Document.Value ;
-        if (pacient.DateOfBirth != null)
-            existingPacient.DateOfBirth = pacient.DateOfBirth;
+        if (pacientDto.FirstName != null)
+            existingPacient.FirstName = pacientDto.FirstName;
+        if (pacientDto.LastName != null)
+            existingPacient.LastName = pacientDto.LastName;
+        if (pacientDto.Document != null)
+            existingPacient.Document = pacientDto.Document.Value ;
+        if (pacientDto.DateOfBirth != null)
+            existingPacient.DateOfBirth = pacientDto.DateOfBirth;
         
         await _context.SaveChangesAsync();
     }

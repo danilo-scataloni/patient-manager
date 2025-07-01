@@ -34,7 +34,7 @@ public class PacientController : ControllerBase
         
     [HttpPost]
     [Route("/api/pacient")]
-    public async Task<IActionResult> RegisterPacient(Pacient pacient)
+    public async Task<IActionResult> RegisterPacient(PacientDto pacient)
     {
         await _pacientService.RegisterPacient(pacient);
         return Ok("Usuário cadastrado com sucesso!");
