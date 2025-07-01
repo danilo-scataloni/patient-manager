@@ -19,14 +19,14 @@ public class PacientController : ControllerBase
 
     [HttpGet]
     [Route("/api/pacients")]
-    public async Task<IEnumerable<Pacient>> GetAllPacients()
+    public async Task<IEnumerable<PacientDto>> GetAllPacients()
     {
         return await _pacientService.GetAllPacients();
     }
 
     [HttpGet]
     [Route("/api/pacients/{id}")]
-    public async Task<Pacient> GetPacient(int id)
+    public async Task<PacientDto> GetPacient(int id)
     {
         return await _pacientService.GetPacient(id);
     }

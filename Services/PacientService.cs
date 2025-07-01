@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using pacient_manager.Data;
 using pacient_manager.DTOs;
@@ -10,23 +9,25 @@ namespace pacient_manager.Services;
 public class PacientService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public PacientService(ApplicationDbContext context)
+    public PacientService(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
-    public async Task<List<Pacient>> GetAllPacients()
+    public async Task<List<PacientDto>> GetAllPacients()
     {
         var pacients = await _context.Pacients.ToListAsync();
-        return pacients;
+        return _mapper.Map<List<Pacient>, List<PacientDto>>(pacients);
     }
 
-    public async Task<Pacient> GetPacient(int id)
+    public async Task<PacientDto> GetPacient(int id)
     {
         var pacient =  await _context.Pacients.FindAsync(id);
         if (pacient == null) throw new Exception("Paciente não encontrado!");
-        return pacient;
+        return _mapper.Map<PacientDto>(pacient);
     }
     
     public async Task RegisterPacient(Pacient pacient)
