@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +37,20 @@ public class PacientController : ControllerBase
     [Route("/api/pacient")]
     public async Task<IActionResult> RegisterPacient(PacientDto pacient)
     {
-        await _pacientService.RegisterPacient(pacient);
-        return Ok("Usuário cadastrado com sucesso!");
+        try
+        {
+            await _pacientService.RegisterPacient(pacient);
+            return Created();
+        }
+        catch (ValidationException ex)
+        {
+            return Conflict($"Um paciente com o documento {pacient.Document} já existe!");
+        }
+        catch (BadHttpRequestException)
+        {
+            return BadRequest("Dados inválidos!");
+        }
+        
     }
 
     [HttpPut]

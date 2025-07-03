@@ -1,4 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using pacient_manager.Data;
 using pacient_manager.DTOs;
@@ -32,6 +35,9 @@ public class PacientService
     
     public async Task RegisterPacient(PacientDto pacient)
     {
+        var existingPacient = _context.Pacients.FirstOrDefault(p => p.Document == pacient.Document);
+        if (existingPacient != null) throw new ValidationException($"Um paciente com o documento {existingPacient.Document}");
+        
         await _context.Pacients.AddAsync(_mapper.Map<Pacient>(pacient));
         await _context.SaveChangesAsync();
     }

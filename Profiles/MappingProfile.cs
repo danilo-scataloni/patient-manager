@@ -8,6 +8,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        //Pacient and PacientDTO
         CreateMap<Pacient, PacientDto>();
         CreateMap<PacientDto, Pacient>().ForMember(dest => dest.Id, opt => opt.Ignore());
     }
