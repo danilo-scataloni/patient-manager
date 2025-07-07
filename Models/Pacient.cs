@@ -10,7 +10,6 @@ public class Pacient
     public string Document { get; set; }
     public DateOnly DateOfBirth { get; set; }
     
-    public Pacient() {}
     public Pacient(Guid id, string firstName, string lastName, string document, DateOnly dateOfBirth)
     {
         Id = id;
