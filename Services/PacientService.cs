@@ -52,7 +52,7 @@ public class PacientService
         if (pacientDto.LastName != null)
             existingPacient.LastName = pacientDto.LastName;
         if (pacientDto.Document != null)
-            existingPacient.Document = pacientDto.Document.Value ;
+            existingPacient.Document = pacientDto.Document ;
         if (pacientDto.DateOfBirth != null)
             existingPacient.DateOfBirth = pacientDto.DateOfBirth;
         

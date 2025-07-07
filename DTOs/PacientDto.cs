@@ -4,6 +4,6 @@ public class PacientDto
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public int? Document { get; set; }
-    public string? DateOfBirth { get; set; }
+    public string? Document { get; set; }
+    public DateOnly DateOfBirth { get; set; }
 }
