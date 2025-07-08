@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using pacient_manager.Models;
+using patient_manager.Models;
 
 namespace pacient_manager.Data;
 
@@ -9,5 +9,5 @@ public class ApplicationDbContext : DbContext
     {
         
     }
-    public DbSet<Pacient> Pacients { get; set; }
+    public DbSet<Patient> Patients { get; set; }
 }

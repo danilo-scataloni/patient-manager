@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pacient-manager", "api.csproj", "{A239373F-111B-44CD-A53A-0DDCE3EE31A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "patient-manager", "api.csproj", "{A239373F-111B-44CD-A53A-0DDCE3EE31A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 using AutoMapper;
 using pacient_manager.DTOs;
-using pacient_manager.Models;
+using patient_manager.Models;
 
 namespace pacient_manager.Profiles;
 
@@ -8,8 +8,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        //Pacient and PacientDTO
-        CreateMap<Pacient, PacientDto>();
-        CreateMap<PacientDto, Pacient>().ForMember(dest => dest.Id, opt => opt.Ignore());
+        //Patient and PacientDTO
+        CreateMap<Patient, PatientDto>();
+        CreateMap<PatientDto, Patient>().ForMember(dest => dest.Id, opt => opt.Ignore());
     }
 }

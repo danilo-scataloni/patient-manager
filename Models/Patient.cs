@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace pacient_manager.Models;
+namespace patient_manager.Models;
 
-public class Pacient
+public class Patient
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
@@ -10,7 +10,7 @@ public class Pacient
     public string Document { get; set; }
     public DateOnly DateOfBirth { get; set; }
     
-    public Pacient(Guid id, string firstName, string lastName, string document, DateOnly dateOfBirth)
+    public Patient(Guid id, string firstName, string lastName, string document, DateOnly dateOfBirth)
     {
         Id = id;
         FirstName = firstName;

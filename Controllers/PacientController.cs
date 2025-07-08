@@ -1,37 +1,34 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using pacient_manager.DTOs;
-using pacient_manager.Models;
-using pacient_manager.Services;
+using patient_manager.Services;
 
-namespace pacient_manager.Controllers;
+namespace patient_manager.Controllers;
 
 [ApiController]
 [Route("[controller]")] 
-public class PacientController : ControllerBase
+public class PatientController : ControllerBase
 {
-    private readonly PacientService _pacientService;
-    public PacientController(PacientService pacientService)
+    private readonly PatientService _patientService;
+    public PatientController(PatientService patientService)
     {
-        _pacientService = pacientService;
+        _patientService = patientService;
     }
 
     [HttpGet]
-    [Route("/api/pacients")]
-    public async Task<IEnumerable<PacientDto>> GetAllPacients()
+    [Route("/api/patients")]
+    public async Task<IEnumerable<PatientDto>> GetAllPatients()
     {
-        return await _pacientService.GetAllPacients();
+        return await _patientService.GetAllPatients();
     }
 
     [HttpGet]
-    [Route("/api/pacients/{id}")]
-    public async Task<ActionResult<PacientDto>> GetPacient(int id)
+    [Route("/api/patients/{id}")]
+    public async Task<ActionResult<PatientDto>> GetPatient([FromRoute] int id)
     {
         try
         {
-            return await _pacientService.GetPacient(id);
+            return await _patientService.GetPatient(id);
         }
         catch (Exception e)
         {
@@ -43,17 +40,17 @@ public class PacientController : ControllerBase
         
         
     [HttpPost]
-    [Route("/api/pacient")]
-    public async Task<IActionResult> RegisterPacient(PacientDto pacient)
+    [Route("/api/patient")]
+    public async Task<IActionResult> RegisterPatient(PatientDto patient)
     {
         try
         {
-            await _pacientService.RegisterPacient(pacient);
+            await _patientService.RegisterPatient(patient);
             return Created();
         }
         catch (ValidationException ex)
         {
-            return Conflict($"Um paciente com o documento {pacient.Document} já existe!");
+            return Conflict($"Um patiente com o documento {patient.Document} já existe!");
         }
         catch (BadHttpRequestException)
         {
@@ -63,10 +60,10 @@ public class PacientController : ControllerBase
     }
 
     [HttpPut]
-    [Route("/api/pacient/{pacientId}")]
-    public async Task<IActionResult> UpdatePacient(int pacientId, PacientDto pacient)
+    [Route("/api/patient/{patientId}")]
+    public async Task<IActionResult> UpdatePatient(int patientId, PatientDto patient)
     {
-       await _pacientService.UpdatePacient(pacientId, pacient);
+       await _patientService.UpdatePatient(patientId, patient);
        return Ok();
     }
     

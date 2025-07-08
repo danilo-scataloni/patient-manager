@@ -1,6 +1,6 @@
 namespace pacient_manager.DTOs;
 
-public class PacientDto
+public class PatientDto
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
