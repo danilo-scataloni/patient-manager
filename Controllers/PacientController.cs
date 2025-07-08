@@ -27,9 +27,18 @@ public class PacientController : ControllerBase
 
     [HttpGet]
     [Route("/api/pacients/{id}")]
-    public async Task<PacientDto> GetPacient(int id)
+    public async Task<ActionResult<PacientDto>> GetPacient(int id)
     {
-        return await _pacientService.GetPacient(id);
+        try
+        {
+            return await _pacientService.GetPacient(id);
+        }
+        catch (Exception e)
+        {
+            return NotFound(e.Message);
+        }
+        
+        
     }
         
         
@@ -57,8 +66,6 @@ public class PacientController : ControllerBase
     [Route("/api/pacient/{pacientId}")]
     public async Task<IActionResult> UpdatePacient(int pacientId, PacientDto pacient)
     {
-       var existingPacient = await _pacientService.GetPacient(pacientId);
-       
        await _pacientService.UpdatePacient(pacientId, pacient);
        return Ok();
     }
