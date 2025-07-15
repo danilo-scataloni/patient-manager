@@ -10,6 +10,7 @@ public class MappingProfile : Profile
     {
         //Patient and PacientDTO
         CreateMap<Patient, PatientDto>();
-        CreateMap<PatientDto, Patient>().ForMember(dest => dest.Id, opt => opt.Ignore());
+        CreateMap<PatientDto, Patient>().
+            ForMember(dest => dest.Id, opt => opt.Ignore());
     }
 }

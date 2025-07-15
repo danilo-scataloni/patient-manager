@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using patient_manager.Interfaces;
 
 namespace patient_manager.Models;
 
@@ -9,7 +10,8 @@ public class Patient
     public string  LastName { get; set; }
     public string Document { get; set; }
     public DateOnly DateOfBirth { get; set; }
-    
+
+    public Patient(){}
     public Patient(Guid id, string firstName, string lastName, string document, DateOnly dateOfBirth)
     {
         Id = id;

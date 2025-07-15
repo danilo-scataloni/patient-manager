@@ -1,13 +1,15 @@
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using pacient_manager.Data;
 using pacient_manager.DTOs;
+using patient_manager.Interfaces;
 using patient_manager.Models;
 
 namespace patient_manager.Services;
 
-public class PatientService
+public class PatientService : IPatientReadService, IPatientWriteService
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -18,17 +20,17 @@ public class PatientService
         _mapper = mapper;
     }
 
-    public async Task<List<PatientDto>> GetAllPatients()
+    public async Task<IEnumerable> GetAllPatients()
     {
         var patients = await _context.Patients.ToListAsync();
         return _mapper.Map<List<Patient>, List<PatientDto>>(patients);
     }
 
-    public async Task<PatientDto> GetPatient(int id)
+    public async Task<PatientDto> GetPatient(Guid id)
     {
-        var pacient =  await _context.Patients.FindAsync(id);
-        if (pacient == null) throw new Exception("Paciente não encontrado!");
-        return _mapper.Map<PatientDto>(pacient);
+        var patient =  await _context.Patients.FindAsync(id);
+        if (patient == null) throw new Exception("Paciente não encontrado!");
+        return _mapper.Map<PatientDto>(patient);
     }
     
     public async Task RegisterPatient(PatientDto patient)
@@ -40,19 +42,19 @@ public class PatientService
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdatePatient(int pacientId, PatientDto patientDto)
+    public async Task UpdatePatient(Guid pacientId, PatientDto patientDto)
     {
-        var existingPacient = await _context.Patients.FindAsync(pacientId);
-        if (existingPacient == null) throw new Exception("Patient não encontrado!");
+        var existingPatient = await _context.Patients.FindAsync(pacientId);
+        if (existingPatient == null) throw new Exception("Patient não encontrado!");
 
         if (patientDto.FirstName != null)
-            existingPacient.FirstName = patientDto.FirstName;
+            existingPatient.FirstName = patientDto.FirstName;
         if (patientDto.LastName != null)
-            existingPacient.LastName = patientDto.LastName;
+            existingPatient.LastName = patientDto.LastName;
         if (patientDto.Document != null)
-            existingPacient.Document = patientDto.Document ;
+            existingPatient.Document = patientDto.Document ;
         if (patientDto.DateOfBirth != null)
-            existingPacient.DateOfBirth = patientDto.DateOfBirth;
+            existingPatient.DateOfBirth = patientDto.DateOfBirth;
         
         await _context.SaveChangesAsync();
     }

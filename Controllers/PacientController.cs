@@ -1,6 +1,8 @@
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using pacient_manager.DTOs;
+using patient_manager.Interfaces;
 using patient_manager.Services;
 
 namespace patient_manager.Controllers;
@@ -10,25 +12,29 @@ namespace patient_manager.Controllers;
 public class PatientController : ControllerBase
 {
     private readonly PatientService _patientService;
-    public PatientController(PatientService patientService)
+    private readonly IPatientReadService _readService;
+    private readonly IPatientWriteService _writeService;
+    public PatientController(PatientService patientService, IPatientReadService readService, IPatientWriteService writeService)
     {
         _patientService = patientService;
+        _readService = readService;
+        _writeService = writeService;
     }
 
     [HttpGet]
     [Route("/api/patients")]
-    public async Task<IEnumerable<PatientDto>> GetAllPatients()
+    public async Task<IEnumerable> GetAllPatients()
     {
-        return await _patientService.GetAllPatients();
+        return await _readService.GetAllPatients();
     }
 
     [HttpGet]
     [Route("/api/patients/{id}")]
-    public async Task<ActionResult<PatientDto>> GetPatient([FromRoute] int id)
+    public async Task<ActionResult<PatientDto>> GetPatient([FromRoute] Guid id)
     {
         try
         {
-            return await _patientService.GetPatient(id);
+            return await _readService.GetPatient(id);
         }
         catch (Exception e)
         {
@@ -45,7 +51,7 @@ public class PatientController : ControllerBase
     {
         try
         {
-            await _patientService.RegisterPatient(patient);
+            await _writeService.RegisterPatient(patient);
             return Created();
         }
         catch (ValidationException ex)
@@ -61,9 +67,9 @@ public class PatientController : ControllerBase
 
     [HttpPut]
     [Route("/api/patient/{patientId}")]
-    public async Task<IActionResult> UpdatePatient(int patientId, PatientDto patient)
+    public async Task<IActionResult> UpdatePatient(Guid patientId, PatientDto patient)
     {
-       await _patientService.UpdatePatient(patientId, patient);
+       await _writeService.UpdatePatient(patientId, patient);
        return Ok();
     }
     
