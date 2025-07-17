@@ -23,7 +23,16 @@ namespace pacient_manager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateDeleted")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Document")

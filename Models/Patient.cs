@@ -3,7 +3,7 @@ using patient_manager.Interfaces;
 
 namespace patient_manager.Models;
 
-public class Patient
+public class Patient : BaseEntity
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
