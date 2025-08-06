@@ -42,11 +42,18 @@ public class PatientService : IPatientReadService, IPatientWriteService
         await _context.SaveChangesAsync();
     }
 
+    public async Task DeletePatient(Guid id)
+    {
+        var patient = await _context.Patients.FindAsync(id);
+        if (patient == null) throw new KeyNotFoundException("Paciente não encontrado!");
+        patient.DateDeleted = DateTime.Now;
+        await _context.SaveChangesAsync();
+    }
+
     public async Task UpdatePatient(Guid pacientId, PatientDto patientDto)
     {
         var existingPatient = await _context.Patients.FindAsync(pacientId);
-        if (existingPatient == null) throw new Exception("Patient não encontrado!");
-
+        if (existingPatient == null) throw new KeyNotFoundException("Patient não encontrado!");
         if (patientDto.FirstName != null)
             existingPatient.FirstName = patientDto.FirstName;
         if (patientDto.LastName != null)

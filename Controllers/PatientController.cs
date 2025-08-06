@@ -9,23 +9,17 @@ namespace patient_manager.Controllers;
 
 [ApiController]
 [Route("[controller]")] 
-public class PatientController : ControllerBase
+public class PatientController(
+    IPatientReadService readService,
+    IPatientWriteService writeService)
+    : ControllerBase
 {
-    private readonly PatientService _patientService;
-    private readonly IPatientReadService _readService;
-    private readonly IPatientWriteService _writeService;
-    public PatientController(PatientService patientService, IPatientReadService readService, IPatientWriteService writeService)
-    {
-        _patientService = patientService;
-        _readService = readService;
-        _writeService = writeService;
-    }
 
     [HttpGet]
     [Route("/api/patients")]
     public async Task<IEnumerable> GetAllPatients()
     {
-        return await _readService.GetAllPatients();
+        return await readService.GetAllPatients();
     }
 
     [HttpGet]
@@ -34,14 +28,27 @@ public class PatientController : ControllerBase
     {
         try
         {
-            return await _readService.GetPatient(id);
+            return await readService.GetPatient(id);
         }
         catch (Exception e)
         {
             return NotFound(e.Message);
         }
-        
-        
+    }
+
+    [HttpDelete]
+    [Route("/api/patients/{id}")]
+    public async Task<IActionResult> DeletePatient([FromRoute] Guid id)
+    {
+        try
+        {
+            writeService.DeletePatient(id);
+            return Ok();
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound("Um paciente com esse id não foi encontrado");
+        }
     }
         
         
@@ -51,7 +58,7 @@ public class PatientController : ControllerBase
     {
         try
         {
-            await _writeService.RegisterPatient(patient);
+            await writeService.RegisterPatient(patient);
             return Created();
         }
         catch (ValidationException ex)
@@ -69,8 +76,15 @@ public class PatientController : ControllerBase
     [Route("/api/patient/{patientId}")]
     public async Task<IActionResult> UpdatePatient(Guid patientId, PatientDto patient)
     {
-       await _writeService.UpdatePatient(patientId, patient);
-       return Ok();
+        try
+        {
+            await writeService.UpdatePatient(patientId, patient);
+            return Ok();
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound("Paciente não encontrado!");
+        }
     }
     
 }

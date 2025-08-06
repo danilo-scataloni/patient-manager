@@ -7,4 +7,5 @@ public interface IPatientWriteService
 {
     public Task UpdatePatient(Guid Id, PatientDto patient);
     public Task RegisterPatient(PatientDto patient);
+    public Task DeletePatient(Guid Id);
 }
