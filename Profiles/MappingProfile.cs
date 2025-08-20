@@ -1,8 +1,7 @@
 using AutoMapper;
-using pacient_manager.DTOs;
 using patient_manager.Models;
 
-namespace pacient_manager.Profiles;
+namespace patient_manager.Profiles;
 
 public class MappingProfile : Profile
 {

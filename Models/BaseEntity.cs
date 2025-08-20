@@ -1,6 +1,12 @@
-using patient_manager.Interfaces;
 
 namespace patient_manager.Models;
+
+
+public interface ISoftDeletable
+{
+    DateTime? DateDeleted { get; set; }
+}
+
 
 public abstract class BaseEntity : ISoftDeletable
 {

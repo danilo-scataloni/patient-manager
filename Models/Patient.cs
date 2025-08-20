@@ -1,6 +1,3 @@
-using System.Text.Json.Serialization;
-using patient_manager.Interfaces;
-
 namespace patient_manager.Models;
 
 public class Patient : BaseEntity
@@ -20,4 +17,12 @@ public class Patient : BaseEntity
         Document = document;
         DateOfBirth = dateOfBirth;
     }
+}
+
+public class PatientDto
+{
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Document { get; set; }
+    public DateOnly DateOfBirth { get; set; }
 }

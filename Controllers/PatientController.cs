@@ -1,8 +1,7 @@
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using pacient_manager.DTOs;
-using patient_manager.Interfaces;
+using patient_manager.Models;
 using patient_manager.Services;
 
 namespace patient_manager.Controllers;
@@ -10,8 +9,7 @@ namespace patient_manager.Controllers;
 [ApiController]
 [Route("[controller]")] 
 public class PatientController(
-    IPatientReadService readService,
-    IPatientWriteService writeService)
+    IPatientService service)
     : ControllerBase
 {
 
@@ -19,7 +17,7 @@ public class PatientController(
     [Route("/api/patients")]
     public async Task<IEnumerable> GetAllPatients()
     {
-        return await readService.GetAllPatients();
+        return await service.GetAllPatients();
     }
 
     [HttpGet]
@@ -28,7 +26,7 @@ public class PatientController(
     {
         try
         {
-            return await readService.GetPatient(id);
+            return await service.GetPatient(id);
         }
         catch (Exception e)
         {
@@ -42,7 +40,7 @@ public class PatientController(
     {
         try
         {
-            writeService.DeletePatient(id);
+            service.DeletePatient(id);
             return Ok();
         }
         catch (KeyNotFoundException e)
@@ -58,7 +56,7 @@ public class PatientController(
     {
         try
         {
-            await writeService.RegisterPatient(patient);
+            await service.RegisterPatient(patient);
             return Created();
         }
         catch (ValidationException ex)
@@ -78,7 +76,7 @@ public class PatientController(
     {
         try
         {
-            await writeService.UpdatePatient(patientId, patient);
+            await service.UpdatePatient(patientId, patient);
             return Ok();
         }
         catch (KeyNotFoundException e)

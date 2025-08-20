@@ -3,13 +3,20 @@ using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using pacient_manager.Data;
-using pacient_manager.DTOs;
-using patient_manager.Interfaces;
 using patient_manager.Models;
 
 namespace patient_manager.Services;
 
-public class PatientService : IPatientReadService, IPatientWriteService
+public interface IPatientService
+{
+    Task<PatientDto> GetPatient(Guid id);
+    Task<IEnumerable> GetAllPatients();
+    public Task UpdatePatient(Guid Id, PatientDto patient);
+    public Task RegisterPatient(PatientDto patient);
+    public Task DeletePatient(Guid Id);
+}
+
+public class PatientService : IPatientService
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
