@@ -11,6 +11,7 @@ builder.Services.AddScoped<PatientService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -25,6 +26,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(builder =>
+    builder.WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod());
 
 app.UseHttpsRedirection();
 app.MapControllers();

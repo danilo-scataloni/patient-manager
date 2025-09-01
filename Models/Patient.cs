@@ -2,7 +2,7 @@ namespace patient_manager.Models;
 
 public class Patient : BaseEntity
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     public string FirstName { get; set; }
     public string  LastName { get; set; }
     public string Document { get; set; }
@@ -24,5 +24,5 @@ public class PatientDto
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? Document { get; set; }
-    public DateOnly DateOfBirth { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
 }

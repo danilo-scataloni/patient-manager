@@ -11,9 +11,9 @@ public interface IPatientService
 {
     Task<PatientDto> GetPatient(Guid id);
     Task<IEnumerable> GetAllPatients();
-    public Task UpdatePatient(Guid Id, PatientDto patient);
-    public Task RegisterPatient(PatientDto patient);
-    public Task DeletePatient(Guid Id);
+    public Task UpdatePatient(Guid id, PatientDto patient);
+    public Task CreatePatient(PatientDto patient);
+    public Task DeletePatient(Guid id);
 }
 
 public class PatientService : IPatientService
@@ -40,10 +40,10 @@ public class PatientService : IPatientService
         return _mapper.Map<PatientDto>(patient);
     }
     
-    public async Task RegisterPatient(PatientDto patient)
+    public async Task CreatePatient(PatientDto patient)
     {
-        var existingPacient = _context.Patients.FirstOrDefault(p => p.Document == patient.Document);
-        if (existingPacient != null) throw new ValidationException($"Um paciente com o documento {existingPacient.Document}");
+        var existingPatient = _context.Patients.FirstOrDefault(p => p.Document == patient.Document);
+        if (existingPatient != null) throw new ValidationException($"Um paciente com o documento {existingPatient.Document}");
         
         await _context.Patients.AddAsync(_mapper.Map<Patient>(patient));
         await _context.SaveChangesAsync();
@@ -68,8 +68,9 @@ public class PatientService : IPatientService
         if (patientDto.Document != null)
             existingPatient.Document = patientDto.Document ;
         if (patientDto.DateOfBirth != null)
-            existingPatient.DateOfBirth = patientDto.DateOfBirth;
+            existingPatient.DateOfBirth = patientDto.DateOfBirth.Value;
         
+        existingPatient.DateCreated =  DateTime.Now;
         await _context.SaveChangesAsync();
     }
 }

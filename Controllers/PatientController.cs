@@ -40,7 +40,7 @@ public class PatientController(
     {
         try
         {
-            service.DeletePatient(id);
+            await service.DeletePatient(id);
             return Ok();
         }
         catch (KeyNotFoundException e)
@@ -51,12 +51,12 @@ public class PatientController(
         
         
     [HttpPost]
-    [Route("/api/patient")]
+    [Route("/api/patients")]
     public async Task<IActionResult> RegisterPatient(PatientDto patient)
     {
         try
         {
-            await service.RegisterPatient(patient);
+            await service.CreatePatient(patient);
             return Created();
         }
         catch (ValidationException ex)
@@ -70,8 +70,8 @@ public class PatientController(
         
     }
 
-    [HttpPut]
-    [Route("/api/patient/{patientId}")]
+    [HttpPatch]
+    [Route("/api/patients/{patientId}")]
     public async Task<IActionResult> UpdatePatient(Guid patientId, PatientDto patient)
     {
         try
