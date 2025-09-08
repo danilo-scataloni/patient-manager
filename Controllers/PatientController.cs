@@ -59,13 +59,17 @@ public class PatientController(
             await service.CreatePatient(patient);
             return Created();
         }
-        catch (ValidationException ex)
+        catch (ArgumentException ex)
         {
             return Conflict($"Um patiente com o documento {patient.Document} já existe!");
         }
         catch (BadHttpRequestException)
         {
             return BadRequest("Dados inválidos!");
+        }
+        catch (ValidationException validationException)
+        {
+            return BadRequest(validationException.Message);
         }
         
     }

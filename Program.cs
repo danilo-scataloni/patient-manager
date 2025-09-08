@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddScoped<IValidationService, ValidationService>();
 builder.Services.AddScoped<PatientService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddEndpointsApiExplorer();
@@ -26,8 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(builder =>
-    builder.WithOrigins("http://localhost:5173")
+app.UseCors(build =>
+    build.WithOrigins("http://localhost:5173")
         .AllowAnyHeader()
         .AllowAnyMethod());
 
